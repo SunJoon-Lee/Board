@@ -4,13 +4,16 @@
 {% if user.is_authenticated %}
  
 <p>Welcome, {{ user.username }}. </p>
-<a href="{% url 'logout' %}" class="text-decoration-none">로그아웃</a>
+<h1><a href="{% url 'post' %}"><글 작성하러 가기></a></h1>
+<a href="javascript:{document.getElementById('logout').submit()}">로그아웃</a>
+        <form id="logout" method="POST" action="{% url 'logout' %}">
+            {% csrf_token %} <input type="hidden" />
+
 {% else %} 
-<p>Welcome, new user. Please log in.</p>
+<p>Welcome, Please log in. 로그인 후 글 작성 가능</p>
 <a href="{% url 'signup' %}">signup</a>
 <a href="{% url 'login' %}">login</a>
 {% endif %}
-<h1><a href="{% url 'post' %}"><글 작성하러 가기></a></h1>
 {%for board in boards.all%}
     <div class="container">
         <a href="{% url 'detail' board.id %}">
